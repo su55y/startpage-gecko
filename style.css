@@ -1,0 +1,23 @@
+:root {
+  --bg: #282828;
+  --fg: #ebdbb2;
+  --fgd: #d5c4a1;
+  --fgw: #f2e5bc;
+  --bg1: #3c3836;
+  --bg2: #504945;
+  --bg3: #665c54;
+  --blue: #458588;
+  --blue2: #83a598;
+  --red: #fb4934;
+}
+
+html {
+  background-color: var(--bg);
+  color: var(--fg);
+}
+
+body,
+div {
+  padding: 0;
+  margin: 0;
+}

@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Startpage",
+  "version": "0.0.1",
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "chrome_settings_overrides": {
+    "homepage": "index.html"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "new-start-page@personal.org"
+    }
+  },
+  "permissions": ["bookmarks"]
+}
