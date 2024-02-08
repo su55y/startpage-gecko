@@ -17,40 +17,72 @@ function validateBookmarks(bookmarks) {
   return 1
 }
 
-function filterBookmarks(bookmarksArray) {
+function filterFolders(bookmarksArray) {
+  const folders = {}
   const BookmarkNodeType = {
     Folder: 'folder',
     Bookmark: 'bookmark',
     Separator: 'separator',
   }
-  const folders = {},
-    bookmarks = []
 
   function iterateOver(bookmarksRoot) {
     for (const bookmarkNode of bookmarksRoot) {
       if (!bookmarkNode.hasOwnProperty('type')) continue
       switch (bookmarkNode.type) {
         case BookmarkNodeType.Folder:
-          folders[bookmarkNode.id] = bookmarkNode.title
+          folders[bookmarkNode.id] = {
+            title: bookmarkNode.title,
+            bookmarks: new Array(),
+          }
           iterateOver(bookmarkNode.children)
           break
         case BookmarkNodeType.Bookmark:
-          bookmarks.push(bookmarkNode)
+          folders[bookmarkNode.parentId].bookmarks.push(bookmarkNode)
+          break
+        case BookmarkNodeType.Separator:
+          // not include
           break
       }
     }
   }
+
   iterateOver(bookmarksArray)
-  return [folders, bookmarks]
+
+  return folders
+}
+
+function renderBookmarks(folders) {
+  for (const [id, folder] of Object.entries(folders)) {
+    const folderDiv = document.createElement('div')
+    folderDiv.id = id
+    folderDiv.className = 'folder'
+
+    const folderTitle = document.createElement('h3')
+    folderTitle.innerText = folder.title
+    folderDiv.prepend(folderTitle)
+
+    for (const bookmark of folder.bookmarks) {
+      const bookmarkElm = document.createElement('a')
+      bookmarkElm.id = bookmark.id
+      bookmarkElm.href = bookmark.url
+      bookmarkElm.innerText = bookmark.title
+      bookmarkElm.className = 'bookmark'
+      folderDiv.appendChild(bookmarkElm)
+    }
+
+    document.getElementById('root').appendChild(folderDiv)
+  }
 }
 
 function main() {
   browser.bookmarks.getTree((bookmarksRoot) => {
     if (!validateBookmarks(bookmarksRoot)) return
-    const [folders, bookmarks] = filterBookmarks(bookmarksRoot[0].children)
-    for (const bookmark of bookmarks) {
-      console.log(`${bookmark.title}: ${folders[bookmark.parentId]}`)
-    }
+
+    const folders = filterFolders(bookmarksRoot[0].children)
+    for (const [id, folder] of Object.entries(folders))
+      if (!folder.bookmarks.length) delete folders[id]
+
+    renderBookmarks(folders)
   })
 }
 

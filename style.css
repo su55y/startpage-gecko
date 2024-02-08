@@ -21,3 +21,37 @@ div {
   padding: 0;
   margin: 0;
 }
+
+body {
+  display: flex;
+  height: 100vh;
+}
+
+#root {
+  display: flex;
+  gap: 1rem;
+  height: 50vh;
+  margin: auto;
+}
+
+.folder {
+  padding: 1rem 2rem;
+  background-color: var(--bg1);
+  overflow-y: auto;
+}
+
+.folder-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--fgd);
+}
+
+.bookmark {
+  color: var(--fg);
+  text-decoration: none;
+  display: list-item;
+}
+
+.bookmark:hover {
+  color: var(--fgw);
+}
