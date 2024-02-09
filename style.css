@@ -48,8 +48,8 @@ body {
 
 .bookmark {
   color: var(--fg);
-  text-decoration: none;
   display: list-item;
+  text-decoration: none;
 }
 
 .bookmark:hover {
