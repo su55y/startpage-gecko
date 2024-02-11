@@ -1,0 +1,64 @@
+:root {
+  --input-font-size: 1.3rem;
+}
+.modal-backlight,
+.modal-area {
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+.modal-backlight {
+  background: linear-gradient(0deg, var(--bg), var(--bg2));
+  opacity: 0.5;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  z-index: 2;
+}
+.modal-area {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  outline: none;
+  z-index: 4;
+}
+.modal {
+  background-color: var(--bg);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+  box-sizing: border-box;
+  color: var(--fg);
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--input-font-size) * 1.25);
+  height: 100%;
+  opacity: 1;
+  overflow: auto;
+  padding: 2rem;
+  position: fixed;
+  right: 0;
+  top: 0;
+  user-select: none;
+  width: 50%;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+}
+.modal-title {
+  font-size: calc(var(--input-font-size) * 1.75);
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  text-transform: capitalize;
+}
+.modal-close {
+  color: var(--fg);
+  cursor: pointer;
+  font-size: 2rem;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
+.modal-close:hover {
+  color: var(--red);
+}

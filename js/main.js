@@ -1,4 +1,12 @@
 /* global validateBookmarks, filterFolders */ //bookmarks.js
+/* global toggleThemeDialog */ //theme.js
+
+function startListeningButtons(callbacks) {
+  for (const btn of document.querySelectorAll('div[id^=btn_]')) {
+    if (callbacks.hasOwnProperty(btn.id))
+      btn.addEventListener('click', callbacks[btn.id])
+  }
+}
 
 function renderBookmarks(folders) {
   for (const [id, folder] of Object.entries(folders)) {
@@ -33,6 +41,7 @@ function main() {
       if (!folder.bookmarks.length) delete folders[id]
 
     renderBookmarks(folders)
+    startListeningButtons({ btn_theme: toggleThemeDialog })
   })
 }
 

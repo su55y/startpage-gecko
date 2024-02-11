@@ -1,16 +1,37 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/modals.css" />
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="style.css" />
-    <title>🔪🔪🔪</title>
+    <script src="./js/consts.js"></script>
+    <script src="./js/template.js"></script>
+    <script src="./js/common.js"></script>
+    <script src="./js/theme.js"></script>
     <script src="./js/bookmarks.js"></script>
     <script src="./js/main.js"></script>
-</head>
+    <title>🔪🔪🔪</title>
+  </head>
 
-<body>
+  <body>
+    <!-- =============== TEMPLATES =============== -->
+    <template id="theme_dialog">
+      <div id="{{theme_dialog_block_id}}">
+        <div class="modal-area">
+          <div class="modal">
+            <div class="modal-title">edit theme</div>
+            <div id="{{theme_dialog_close_id}}" class="modal-close">[x]</div>
+          </div>
+        </div>
+        <div class="modal-backlight"></div>
+      </div>
+    </template>
+    <!-- =========== END OF TEMPLATES ============ -->
+
+    <div class="buttons">
+      <div id="btn_theme" class="btn">T</div>
+      <div class="btn">D</div>
+    </div>
     <div id="root"></div>
-</body>
-
+  </body>
 </html>

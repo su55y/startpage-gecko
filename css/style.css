@@ -11,11 +11,6 @@
   --red: #fb4934;
 }
 
-html {
-  background-color: var(--bg);
-  color: var(--fg);
-}
-
 body,
 div {
   padding: 0;
@@ -23,6 +18,8 @@ div {
 }
 
 body {
+  background-color: var(--bg);
+  color: var(--fg);
   display: flex;
   height: 100vh;
 }
@@ -53,5 +50,23 @@ body {
 }
 
 .bookmark:hover {
+  color: var(--fgw);
+}
+
+.buttons {
+  display: flex;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  gap: 0.2rem;
+}
+
+.btn {
+  cursor: pointer;
+  color: var(--fg);
+  font-size: 150%;
+}
+
+.btn:hover {
   color: var(--fgw);
 }
