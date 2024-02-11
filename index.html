@@ -7,6 +7,7 @@
     <script src="./js/consts.js"></script>
     <script src="./js/template.js"></script>
     <script src="./js/common.js"></script>
+    <script src="./js/storage.js"></script>
     <script src="./js/theme.js"></script>
     <script src="./js/bookmarks.js"></script>
     <script src="./js/main.js"></script>
@@ -15,11 +16,25 @@
 
   <body>
     <!-- =============== TEMPLATES =============== -->
+    <template id="color_input">
+      <div class="new-color-input-block">
+        <input
+          type="color"
+          id="{{new_color_id}}"
+          class="new-color-input"
+          value="{{new_color_value}}"
+        />
+        <label for="{{new_color_id}}" class="new-color-input-label"
+          >{{new_color_id}}</label
+        >
+      </div>
+    </template>
     <template id="theme_dialog">
       <div id="{{theme_dialog_block_id}}">
         <div class="modal-area">
           <div class="modal">
             <div class="modal-title">edit theme</div>
+            <div id="{{theme_dialog_colors_id}}"></div>
             <div id="{{theme_dialog_close_id}}" class="modal-close">[x]</div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 /* global validateBookmarks, filterFolders */ //bookmarks.js
-/* global toggleThemeDialog */ //theme.js
+/* global toggleThemeDialog, applyColors */ //theme.js
+/* global storage */ //storage.js
 
 function startListeningButtons(callbacks) {
   for (const btn of document.querySelectorAll('div[id^=btn_]')) {
@@ -42,6 +43,8 @@ function main() {
 
     renderBookmarks(folders)
     startListeningButtons({ btn_theme: toggleThemeDialog })
+    storage.init()
+    applyColors(storage.load().colors)
   })
 }
 

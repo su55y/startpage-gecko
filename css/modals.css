@@ -62,3 +62,21 @@
 .modal-close:hover {
   color: var(--red);
 }
+
+input[type='color'],
+input[type='color']::-moz-focus-inner,
+input[type='color']::-moz-color-swatch {
+  border: none;
+  outline: none;
+}
+
+.btn-save-theme {
+  padding: 1.2rem 2rem;
+  background: var(--bg1);
+  color: var(--fgw);
+  border: none;
+}
+
+.btn-save-theme:hover {
+  background: var(--bg2);
+}
