@@ -52,6 +52,8 @@ function filterFolders(bookmarksArray) {
   }
 
   iterateOver(bookmarksArray)
+  for (const [id, folder] of Object.entries(folders))
+    if (!folder.bookmarks.length) delete folders[id]
 
   return folders
 }

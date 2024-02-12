@@ -15,7 +15,18 @@
   </head>
 
   <body>
+    <div class="buttons">
+      <div id="btn_theme" class="btn">T</div>
+      <div class="btn">D</div>
+    </div>
+    <div id="root"></div>
     <!-- =============== TEMPLATES =============== -->
+    <template id="folder">
+      <div class="folder">
+        <div class="folder-title">{{title}}</div>
+        <div id="{{id}}" class="folder-bookmarks"></div>
+      </div>
+    </template>
     <template id="color_input">
       <div class="new-color-input-block">
         <input
@@ -24,9 +35,9 @@
           class="new-color-input"
           value="{{new_color_value}}"
         />
-        <label for="{{new_color_id}}" class="new-color-input-label"
-          >{{new_color_id}}</label
-        >
+        <label for="{{new_color_id}}" class="new-color-input-label">
+          {{new_color_id}}
+        </label>
       </div>
     </template>
     <template id="theme_dialog">
@@ -42,11 +53,5 @@
       </div>
     </template>
     <!-- =========== END OF TEMPLATES ============ -->
-
-    <div class="buttons">
-      <div id="btn_theme" class="btn">T</div>
-      <div class="btn">D</div>
-    </div>
-    <div id="root"></div>
   </body>
 </html>

@@ -72,11 +72,17 @@ input[type='color']::-moz-color-swatch {
 
 .btn-save-theme {
   padding: 1.2rem 2rem;
-  background: var(--bg1);
-  color: var(--fgw);
+  background: var(--red);
+  color: #fff;
   border: none;
 }
 
 .btn-save-theme:hover {
-  background: var(--bg2);
+  filter: brightness(1.25);
+}
+
+#theme-dialog-colors {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
 }
