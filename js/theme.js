@@ -27,16 +27,49 @@ function updateTempColors({ id, value }) {
   applyColors(tempColors)
 }
 
+function themeChanged() {
+  for (const [id, value] of Object.entries(storage.load().colors)) {
+    if (!tempColors[id]) return 1
+    if (tempColors[id] !== value) return 1
+  }
+}
+
 function newSaveButton() {
   const saveBtn = document.createElement('button')
-  saveBtn.className = 'btn-save-theme'
-  saveBtn.id = 'save-btn'
+  saveBtn.classList.add(...['btn-theme-dialog', 'btn-save-theme'])
+  saveBtn.classList
   saveBtn.innerText = 'save'
   saveBtn.addEventListener('click', () => {
     storage.update(tempColors)
     saveBtn.remove()
   })
   return saveBtn
+}
+
+function newCancelButton() {
+  const cancelButton = document.createElement('button')
+  cancelButton.classList.add(...['btn-theme-dialog', 'btn-cancel-theme'])
+  cancelButton.innerText = 'cancel'
+  cancelButton.addEventListener('click', () => {
+    tempColors = storage.load().colors
+    applyColors(tempColors)
+    document.getElementById(consts.theme_dialog_block_id).remove()
+    toggleThemeDialog()
+  })
+  return cancelButton
+}
+
+function addButtons() {
+  const buttonsBlock = document.getElementById(
+    consts.theme_dialog_buttons_block_id
+  )
+  if (!buttonsBlock) {
+    console.warn("can't get buttons block")
+    return
+  }
+  buttonsBlock.innerHTML = ''
+  buttonsBlock.appendChild(newSaveButton())
+  buttonsBlock.appendChild(newCancelButton())
 }
 
 function toggleThemeDialog() {
@@ -54,13 +87,8 @@ function toggleThemeDialog() {
 
   document.body.prepend(themeDialogBlock)
 
-  const saveBtn = newSaveButton()
-
-  if (tempColors !== undefined) {
-    if (!document.getElementById('save-btn'))
-      document
-        .getElementById(consts.theme_dialog_colors_id)
-        .appendChild(saveBtn)
+  if (tempColors !== undefined && themeChanged()) {
+    addButtons()
   } else {
     tempColors = storage.load().colors
   }
@@ -74,10 +102,7 @@ function toggleThemeDialog() {
     )
     document.getElementById(id)?.addEventListener('change', (e) => {
       updateTempColors(e.target)
-      if (!document.getElementById('save-btn'))
-        document
-          .getElementById(consts.theme_dialog_colors_id)
-          .appendChild(saveBtn)
+      addButtons()
     })
   }
 
