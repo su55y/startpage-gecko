@@ -1,5 +1,5 @@
 /* global validateBookmarks, filterFolders */ //bookmarks.js
-/* global toggleThemeDialog, applyColors */ //theme.js
+/* global toggleThemeDialog, applyColorscheme */ //theme.js
 /* global storage */ //storage.js
 
 function startListeningButtons(callbacks) {
@@ -10,7 +10,6 @@ function startListeningButtons(callbacks) {
 }
 
 function renderBookmarks(folders) {
-  console.log('new rendering method')
   for (const [id, folder] of Object.entries(folders)) {
     const folderBlock = tpl.folder({ title: folder.title, id })
     if (!folderBlock) {
@@ -39,7 +38,7 @@ function main() {
     renderBookmarks(folders)
     startListeningButtons({ btn_theme: toggleThemeDialog })
     storage.init()
-    applyColors(storage.load().colors)
+    applyColorscheme(storage.load().colors)
   })
 }
 

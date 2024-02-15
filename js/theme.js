@@ -4,16 +4,15 @@
 
 /* exported
   toggleThemeDialog
-  applyColors
+  applyColorscheme
 */
 
-var tempColors
+var colorscheme
 
-function applyColors(colors) {
-  const colorsStyleId = 'colors-style'
-  document.getElementById(colorsStyleId)?.remove()
+function applyColorscheme(colors) {
+  document.getElementById(consts.colorscheme_style_element_id)?.remove()
   const colorsStyle = document.createElement('style')
-  colorsStyle.id = colorsStyleId
+  colorsStyle.id = consts.colorscheme_style_element_id
   colorsStyle.innerHTML = ':root {'
   for (const [key, value] of Object.entries(colors)) {
     colorsStyle.innerHTML += `--${key}: ${value};`
@@ -23,36 +22,39 @@ function applyColors(colors) {
 }
 
 function updateTempColors({ id, value }) {
-  tempColors[id] = value
-  applyColors(tempColors)
+  colorscheme[id] = value
+  applyColorscheme(colorscheme)
 }
 
 function themeChanged() {
   for (const [id, value] of Object.entries(storage.load().colors)) {
-    if (!tempColors[id]) return 1
-    if (tempColors[id] !== value) return 1
+    if (!colorscheme[id]) return 1
+    if (colorscheme[id] !== value) return 1
   }
 }
 
+function newButton(btnClass, innerText) {
+  const btn = document.createElement('button')
+  btn.classList.add(...['btn-theme-dialog', btnClass])
+  btn.innerText = innerText
+  return btn
+}
+
 function newSaveButton() {
-  const saveBtn = document.createElement('button')
-  saveBtn.classList.add(...['btn-theme-dialog', 'btn-save-theme'])
-  saveBtn.classList
-  saveBtn.innerText = 'save'
+  const saveBtn = newButton('btn-save-theme', 'save')
   saveBtn.addEventListener('click', () => {
-    storage.update(tempColors)
-    saveBtn.remove()
+    storage.update(colorscheme)
+    document.getElementById(consts.theme_dialog_block_id).remove()
+    toggleThemeDialog()
   })
   return saveBtn
 }
 
 function newCancelButton() {
-  const cancelButton = document.createElement('button')
-  cancelButton.classList.add(...['btn-theme-dialog', 'btn-cancel-theme'])
-  cancelButton.innerText = 'cancel'
+  const cancelButton = newButton('btn-cancel-theme', 'cancel')
   cancelButton.addEventListener('click', () => {
-    tempColors = storage.load().colors
-    applyColors(tempColors)
+    colorscheme = storage.load().colors
+    applyColorscheme(colorscheme)
     document.getElementById(consts.theme_dialog_block_id).remove()
     toggleThemeDialog()
   })
@@ -64,7 +66,7 @@ function addButtons() {
     consts.theme_dialog_buttons_block_id
   )
   if (!buttonsBlock) {
-    console.warn("can't get buttons block")
+    console.warn("can't get theme dialog buttons block")
     return
   }
   buttonsBlock.innerHTML = ''
@@ -73,7 +75,6 @@ function addButtons() {
 }
 
 function toggleThemeDialog() {
-  console.log('toogle theme dialog handler')
   if (document.getElementById(consts.theme_dialog_block_id)) {
     document.getElementById(consts.theme_dialog_block_id).remove()
     return
@@ -87,13 +88,13 @@ function toggleThemeDialog() {
 
   document.body.prepend(themeDialogBlock)
 
-  if (tempColors !== undefined && themeChanged()) {
+  if (colorscheme !== undefined && themeChanged()) {
     addButtons()
   } else {
-    tempColors = storage.load().colors
+    colorscheme = storage.load().colors
   }
 
-  for (const [id, value] of Object.entries(tempColors).reverse()) {
+  for (const [id, value] of Object.entries(colorscheme).reverse()) {
     document.getElementById(consts.theme_dialog_colors_id).prepend(
       tpl.color_input({
         new_color_id: id,
