@@ -20,12 +20,7 @@ function renderBookmarks(folders) {
     document.getElementById('root').prepend(folderBlock)
 
     for (const bookmark of folder.bookmarks) {
-      const bookmarkElm = document.createElement('a')
-      bookmarkElm.id = bookmark.id
-      bookmarkElm.href = bookmark.url
-      bookmarkElm.innerText = bookmark.title
-      bookmarkElm.className = 'bookmark'
-      document.getElementById(id).appendChild(bookmarkElm)
+      folderBlock.appendChild(tpl.bookmark(bookmark))
     }
   }
 }

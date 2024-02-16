@@ -18,4 +18,5 @@ const tpl = {
   theme_dialog: () => loadTpl('theme_dialog', consts),
   color_input: (color) => loadTpl('color_input', color),
   folder: (folder) => loadTpl('folder', folder),
+  bookmark: (bookmark) => loadTpl('bookmark', bookmark),
 }
