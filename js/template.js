@@ -16,6 +16,7 @@ const loadTpl = (id, obj = {}) => {
 
 const tpl = {
   theme_dialog: () => loadTpl('theme_dialog', consts),
+  theme_dialog_buttons: () => loadTpl('theme_dialog_buttons', consts),
   color_input: (color) => loadTpl('color_input', color),
   folder: (folder) => loadTpl('folder', folder),
   bookmark: (bookmark) => loadTpl('bookmark', bookmark),

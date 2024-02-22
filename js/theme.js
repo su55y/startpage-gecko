@@ -33,34 +33,6 @@ function themeChanged() {
   }
 }
 
-function newButton(btnClass, innerText) {
-  const btn = document.createElement('button')
-  btn.classList.add(...['btn-theme-dialog', btnClass])
-  btn.innerText = innerText
-  return btn
-}
-
-function newSaveButton() {
-  const saveBtn = newButton('btn-save-theme', 'save')
-  saveBtn.addEventListener('click', () => {
-    storage.update(colorscheme)
-    document.getElementById(consts.theme_dialog_block_id).remove()
-    toggleThemeDialog()
-  })
-  return saveBtn
-}
-
-function newCancelButton() {
-  const cancelButton = newButton('btn-cancel-theme', 'cancel')
-  cancelButton.addEventListener('click', () => {
-    colorscheme = storage.load().colors
-    applyColorscheme(colorscheme)
-    document.getElementById(consts.theme_dialog_block_id).remove()
-    toggleThemeDialog()
-  })
-  return cancelButton
-}
-
 function addButtons() {
   const buttonsBlock = document.getElementById(
     consts.theme_dialog_buttons_block_id
@@ -70,8 +42,22 @@ function addButtons() {
     return
   }
   buttonsBlock.innerHTML = ''
-  buttonsBlock.appendChild(newSaveButton())
-  buttonsBlock.appendChild(newCancelButton())
+  buttonsBlock.appendChild(tpl.theme_dialog_buttons())
+  document
+    .getElementById(consts.theme_dialog_button_save)
+    ?.addEventListener('click', () => {
+      storage.update(colorscheme)
+      document.getElementById(consts.theme_dialog_block_id).remove()
+      toggleThemeDialog()
+    })
+  document
+    .getElementById(consts.theme_dialog_button_cancel)
+    ?.addEventListener('click', () => {
+      colorscheme = storage.load().colors
+      applyColorscheme(colorscheme)
+      document.getElementById(consts.theme_dialog_block_id).remove()
+      toggleThemeDialog()
+    })
 }
 
 function toggleThemeDialog() {

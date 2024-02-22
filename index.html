@@ -50,14 +50,29 @@
           <div class="modal">
             <div class="modal-title">edit theme</div>
             <div id="{{theme_dialog_colors_id}}"></div>
-            <div
-              class="theme-dialog-buttons-block"
-              id="{{theme_dialog_buttons_block_id}}"
-            ></div>
+            <div id="{{theme_dialog_buttons_block_id}}"></div>
             <div id="{{theme_dialog_close_id}}" class="modal-close">[x]</div>
           </div>
         </div>
         <div class="modal-backlight"></div>
+      </div>
+    </template>
+    <template id="theme_dialog_buttons">
+      <div class="theme-dialog-buttons-block">
+        <button
+          type="button"
+          id="{{theme_dialog_button_save}}"
+          class="btn-theme-dialog btn-save-theme"
+        >
+          save
+        </button>
+        <button
+          type="button"
+          id="{{theme_dialog_button_cancel}}"
+          class="btn-theme-dialog btn-cancel-theme"
+        >
+          cancel
+        </button>
       </div>
     </template>
     <!-- =========== END OF TEMPLATES ============ -->
