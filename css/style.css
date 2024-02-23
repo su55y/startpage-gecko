@@ -10,10 +10,28 @@
   --red: '#bf616a'; /* nord11 */
 }
 
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    filter: blur(10px);
+  }
+  90% {
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 body,
 div {
   padding: 0;
   margin: 0;
+}
+
+html {
+  animation: 0.25s linear 0s 1 fadeIn;
+  background-color: #000;
 }
 
 body {
