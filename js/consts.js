@@ -11,5 +11,6 @@ const consts = {
   theme_dialog_buttons: 'theme-dialog-buttons',
   theme_dialog_button_save: 'theme-dialog-button-save',
   theme_dialog_button_cancel: 'theme-dialog-button-cancel',
+  theme_dialog_select: 'theme-dialog-select',
   colorscheme_style_element_id: 'colorscheme-style-element',
 }

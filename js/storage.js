@@ -14,6 +14,18 @@ const nord = {
   red: '#bf616a', // nord11
 }
 
+const gruvbox = {
+  bg: '#282828',
+  bg1: '#3c3836',
+  bg2: '#928374',
+
+  fg: '#ebdbb2',
+  fg2: '#fbf1c7',
+  fg2: '#a89984',
+
+  red: '#cc241d',
+}
+
 const THEME_STORAGE_KEY = 'start_page_theme'
 const DEFAULT_THEME_STORAGE = JSON.stringify({
   colors: nord,
@@ -36,4 +48,5 @@ const storage = {
   init,
   load,
   update: updateColors,
+  themePresets: { nord, gruvbox },
 }

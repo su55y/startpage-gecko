@@ -74,24 +74,51 @@ function toggleThemeDialog() {
 
   document.body.prepend(themeDialogBlock)
 
+  const themeSelect = document.getElementById(consts.theme_dialog_select)
+  if (!themeSelect) {
+    console.warn(`can't get select#'${consts.theme_dialog_select}'`)
+    return
+  }
+
   if (colorscheme !== undefined && themeChanged()) {
     addButtons()
   } else {
     colorscheme = storage.load().colors
   }
 
-  for (const [id, value] of Object.entries(colorscheme).reverse()) {
-    document.getElementById(consts.theme_dialog_colors_id).prepend(
-      tpl.color_input({
-        new_color_id: id,
-        new_color_value: value,
+  const drawColors = () => {
+    document.getElementById(consts.theme_dialog_colors_id).innerHTML = ''
+    for (const [id, value] of Object.entries(colorscheme).reverse()) {
+      document.getElementById(consts.theme_dialog_colors_id).prepend(
+        tpl.color_input({
+          new_color_id: id,
+          new_color_value: value,
+        })
+      )
+      document.getElementById(id)?.addEventListener('change', (e) => {
+        updateTempColors(e.target)
+        addButtons()
       })
-    )
-    document.getElementById(id)?.addEventListener('change', (e) => {
-      updateTempColors(e.target)
-      addButtons()
-    })
+    }
   }
+  drawColors()
+
+  for (const theme in storage.themePresets) {
+    const themeOption = document.createElement('option')
+    themeOption.value = theme
+    themeOption.innerText = theme
+    themeSelect.append(themeOption)
+  }
+  themeSelect.addEventListener(
+    'input',
+    (e) => {
+      if (e.target.id !== consts.theme_dialog_select) return
+      colorscheme = storage.themePresets[e.target.value] || colorscheme
+      applyColorscheme(colorscheme)
+      drawColors()
+    },
+    false
+  )
 
   document
     .getElementById(consts.theme_dialog_close_id)
