@@ -33,6 +33,13 @@ function themeChanged() {
   }
 }
 
+function nonEqualThemes(a, b) {
+  for (const [id, value] of Object.entries(a)) {
+    if (!b[id]) return 1
+    if (b[id] !== value) return 1
+  }
+}
+
 function addButtons() {
   const buttonsBlock = document.getElementById(
     consts.theme_dialog_buttons_block_id
@@ -107,6 +114,13 @@ function toggleThemeDialog() {
     const themeOption = document.createElement('option')
     themeOption.value = theme
     themeOption.innerText = theme
+    if (
+      colorscheme === storage.themePresets[theme] ||
+      !nonEqualThemes(colorscheme, storage.themePresets[theme])
+    ) {
+      themeOption.selected = true
+      themeOption.disabled = true
+    }
     themeSelect.append(themeOption)
   }
   themeSelect.addEventListener(
@@ -116,6 +130,9 @@ function toggleThemeDialog() {
       colorscheme = storage.themePresets[e.target.value] || colorscheme
       applyColorscheme(colorscheme)
       drawColors()
+      if (colorscheme !== undefined && themeChanged()) {
+        addButtons()
+      }
     },
     false
   )
