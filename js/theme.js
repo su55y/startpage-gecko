@@ -9,6 +9,36 @@
 
 var colorscheme
 
+function toggleThemeDialog() {
+  if (document.getElementById(consts.theme_dialog_block_id)) {
+    document.getElementById(consts.theme_dialog_block_id).remove()
+    return
+  }
+
+  const themeDialogBlock = tpl.theme_dialog()
+  if (!themeDialogBlock) {
+    console.warn(`can't load theme_dialog from tpl (${tpl})`)
+    return
+  }
+
+  document.body.prepend(themeDialogBlock)
+
+  if (colorscheme !== undefined && themeChanged()) {
+    addButtons()
+  } else {
+    colorscheme = storage.load().colors
+  }
+
+  drawColors()
+  fillThemeSelect()
+
+  document
+    .getElementById(consts.theme_dialog_close_id)
+    ?.addEventListener('click', () => themeDialogBlock.remove())
+
+  handleModalAreaClick()
+}
+
 function applyColorscheme(colors) {
   document.getElementById(consts.colorscheme_style_element_id)?.remove()
   const colorsStyle = document.createElement('style')
@@ -67,48 +97,34 @@ function addButtons() {
     })
 }
 
-function toggleThemeDialog() {
-  if (document.getElementById(consts.theme_dialog_block_id)) {
-    document.getElementById(consts.theme_dialog_block_id).remove()
+function drawColors() {
+  if (colorscheme === undefined) {
+    console.warn(`colorscheme is undefined: ${colorscheme}`)
     return
   }
-
-  const themeDialogBlock = tpl.theme_dialog()
-  if (!themeDialogBlock) {
-    console.warn(`can't load theme_dialog from tpl (${tpl})`)
+  const colorsBlock = document.getElementById(consts.theme_dialog_colors_id)
+  if (!colorsBlock) {
+    console.warn(`can't get #{consts.theme_dialog_colors_id}`)
     return
   }
+  colorsBlock.innerHTML = ''
+  for (const [id, value] of Object.entries(colorscheme).reverse()) {
+    colorsBlock.prepend(
+      tpl.color_input({ new_color_id: id, new_color_value: value })
+    )
+    document.getElementById(id)?.addEventListener('change', (e) => {
+      updateTempColors(e.target)
+      addButtons()
+    })
+  }
+}
 
-  document.body.prepend(themeDialogBlock)
-
+function fillThemeSelect() {
   const themeSelect = document.getElementById(consts.theme_dialog_select)
   if (!themeSelect) {
     console.warn(`can't get select#'${consts.theme_dialog_select}'`)
     return
   }
-
-  if (colorscheme !== undefined && themeChanged()) {
-    addButtons()
-  } else {
-    colorscheme = storage.load().colors
-  }
-
-  const drawColors = () => {
-    document.getElementById(consts.theme_dialog_colors_id).innerHTML = ''
-    for (const [id, value] of Object.entries(colorscheme).reverse()) {
-      document.getElementById(consts.theme_dialog_colors_id).prepend(
-        tpl.color_input({
-          new_color_id: id,
-          new_color_value: value,
-        })
-      )
-      document.getElementById(id)?.addEventListener('change', (e) => {
-        updateTempColors(e.target)
-        addButtons()
-      })
-    }
-  }
-  drawColors()
 
   for (const theme in storage.themePresets) {
     const themeOption = document.createElement('option')
@@ -123,23 +139,15 @@ function toggleThemeDialog() {
     }
     themeSelect.append(themeOption)
   }
-  themeSelect.addEventListener(
-    'input',
-    (e) => {
-      if (e.target.id !== consts.theme_dialog_select) return
-      colorscheme = storage.themePresets[e.target.value] || colorscheme
-      applyColorscheme(colorscheme)
-      drawColors()
-      if (colorscheme !== undefined && themeChanged()) {
-        addButtons()
-      }
-    },
-    false
-  )
+  themeSelect.addEventListener('input', themeSelectCallback, false)
+}
 
-  document
-    .getElementById(consts.theme_dialog_close_id)
-    ?.addEventListener('click', () => themeDialogBlock.remove())
-
-  handleModalAreaClick()
+function themeSelectCallback(e) {
+  if (e.target.id !== consts.theme_dialog_select) return
+  colorscheme = storage.themePresets[e.target.value] || colorscheme
+  applyColorscheme(colorscheme)
+  drawColors()
+  if (colorscheme !== undefined && themeChanged()) {
+    addButtons()
+  }
 }
