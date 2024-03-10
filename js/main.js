@@ -19,8 +19,9 @@ function renderBookmarks(folders) {
     }
     document.getElementById('root').prepend(folderBlock)
 
+    const bookmarksBlock = document.getElementById(id)
     for (const bookmark of folder.bookmarks) {
-      folderBlock.appendChild(tpl.bookmark(bookmark))
+      bookmarksBlock.appendChild(tpl.bookmark(bookmark))
     }
   }
 }
