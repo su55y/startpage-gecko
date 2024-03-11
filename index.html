@@ -11,6 +11,7 @@
     <script src="./js/storage.js"></script>
     <script src="./js/theme.js"></script>
     <script src="./js/bookmarks.js"></script>
+    <script src="./js/remove.js"></script>
     <script src="./js/main.js"></script>
     <title>🔪🔪🔪</title>
   </head>
@@ -18,14 +19,14 @@
   <body>
     <div class="buttons">
       <div id="btn_theme" class="btn">T</div>
-      <div class="btn">D</div>
+      <div id="btn_remove" class="btn">R</div>
     </div>
     <div id="root"></div>
     <!-- =============== TEMPLATES =============== -->
     <template id="folder">
-      <div class="folder">
-        <div class="folder-title">{{title}}</div>
-        <div id="{{id}}" class="folder-bookmarks"></div>
+      <div id="{{id}}" class="folder">
+        <div id="folder-title-{{id}}" class="folder-title">{{title}}</div>
+        <div id="folder-bookmarks-{{id}}" class="folder-bookmarks"></div>
       </div>
     </template>
     <template id="bookmark">

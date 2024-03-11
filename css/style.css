@@ -52,6 +52,7 @@ body {
   padding: 1rem 2rem;
   background-color: var(--bg1);
   overflow-y: auto;
+  position: relative;
 }
 
 .folder-title {
@@ -86,4 +87,34 @@ body {
 
 .btn:hover {
   color: var(--fgw);
+}
+
+.btn-remove-folder {
+  color: var(--red);
+  cursor: pointer;
+  display: block;
+  font-size: 0.8rem;
+  position: absolute;
+  right: 0.4rem;
+  top: 0.2rem;
+}
+
+.btn-remove-bookmark {
+  color: var(--red);
+  cursor: pointer;
+  display: inline-block;
+  font-size: 0.5rem;
+}
+
+.btn-remove-folder:hover,
+.btn-remove-bookmark:hover {
+  filter: brightness(1.25);
+}
+
+.folder-remove {
+  filter: brightness(1.25);
+}
+.bookmark-remove {
+  text-decoration: line-through;
+  filter: brightness(1.1);
 }

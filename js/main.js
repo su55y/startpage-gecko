@@ -1,5 +1,7 @@
 /* global validateBookmarks, filterFolders */ //bookmarks.js
 /* global toggleThemeDialog, applyColorscheme */ //theme.js
+/* global toggleRemoveMode */ //remove.js
+/* global consts */ // consts.js
 /* global storage */ //storage.js
 
 function startListeningButtons(callbacks) {
@@ -19,7 +21,7 @@ function renderBookmarks(folders) {
     }
     document.getElementById('root').prepend(folderBlock)
 
-    const bookmarksBlock = document.getElementById(id)
+    const bookmarksBlock = document.getElementById(consts.folder_bookmarks(id))
     for (const bookmark of folder.bookmarks) {
       bookmarksBlock.appendChild(tpl.bookmark(bookmark))
     }
@@ -32,7 +34,10 @@ function main() {
 
     const folders = filterFolders(bookmarksRoot[0].children)
     renderBookmarks(folders)
-    startListeningButtons({ btn_theme: toggleThemeDialog })
+    startListeningButtons({
+      btn_theme: toggleThemeDialog,
+      btn_remove: () => toggleRemoveMode(folders),
+    })
     storage.init()
     applyColorscheme(storage.load().colors)
   })

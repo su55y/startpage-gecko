@@ -13,4 +13,6 @@ const consts = {
   theme_dialog_button_cancel: 'theme-dialog-button-cancel',
   theme_dialog_select: 'theme-dialog-select',
   colorscheme_style_element_id: 'colorscheme-style-element',
+  folder_title: (id) => `folder-title-${id}`,
+  folder_bookmarks: (id) => `folder-bookmarks-${id}`,
 }
