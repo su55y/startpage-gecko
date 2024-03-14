@@ -17,11 +17,26 @@ function toggleRemoveMode(folders, setState = undefined) {
     const titleBlock = document.getElementById(consts.folder_title(id))
     titleBlock.appendChild(newRemoveFolderBtn(id, folder.title))
 
-    // for (const bookmark of folder.bookmarks) {
-    //   document
-    //     .getElementById(bookmark.id)
-    //     .appendChild(newRemoveBookmarkBtn(bookmark))
-    // }
+    for (const bookmark of folder.bookmarks) {
+      const bookmarkBlock = document.getElementById(bookmark.id)
+      if (!bookmarkBlock) {
+        console.warn(`can't get bookmark block #${bookmark.id}`)
+        continue
+      }
+      bookmarkBlock.classList.add('bookmark-remove')
+      if (!bookmarkBlock.hasAttribute('href')) {
+        console.warn(`'href' attribute not found in:`)
+        console.log(bookmarkBlock)
+      } else {
+        bookmarkBlock.setAttribute('href', '#')
+      }
+      bookmarkBlock.addEventListener('click', () => {
+        browser.bookmarks
+          .remove(bookmark.id)
+          .then(() => bookmarkBlock.remove())
+          .catch((e) => console.warn(`bookmarks.remove exception: ${e}`))
+      })
+    }
   }
 }
 
@@ -33,31 +48,14 @@ function newRemoveFolderBtn(id, title) {
   btn.addEventListener('click', () => {
     browser.bookmarks
       .removeTree(id)
-      .then((_) => document.getElementById(id)?.remove())
-      .catch((e) => console.warn(`bookmarks.remove exception: ${e}`))
+      .then(() => document.getElementById(id)?.remove())
+      .catch((e) => console.warn(`bookmarks.removeTree exception: ${e}`))
   })
   btn.addEventListener('mouseover', () => {
     document.getElementById(id).classList.add('folder-remove')
   })
   btn.addEventListener('mouseout', () => {
     document.getElementById(id).classList.remove('folder-remove')
-  })
-  return btn
-}
-
-function newRemoveBookmarkBtn({ id, title }) {
-  const btn = document.createElement('span')
-  btn.innerText = 'X'
-  btn.title = `remove ${title}`
-  btn.className = 'btn-remove-bookmark'
-  btn.addEventListener('click', () => {
-    console.log(`new remove bookmark '${id}' callback`)
-  })
-  btn.addEventListener('mouseover', () => {
-    document.getElementById(id).classList.add('bookmark-remove')
-  })
-  btn.addEventListener('mouseout', () => {
-    document.getElementById(id).classList.remove('bookmark-remove')
   })
   return btn
 }

@@ -114,7 +114,12 @@ body {
 .folder-remove {
   filter: brightness(1.25);
 }
-.bookmark-remove {
+
+.bookmark-remove:hover {
   text-decoration: line-through;
   filter: brightness(1.1);
+}
+.bookmark-remove::marker {
+  content: 'x';
+  color: var(--red);
 }
