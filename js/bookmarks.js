@@ -1,7 +1,39 @@
 /* exported
+    renderBookmarks
+    reRenderBookmarks
     validateBookmarks
     filterFolders
 */
+
+function renderBookmarks(folders) {
+  const root = document.getElementById('root')
+  if (!root) {
+    console.warn("can't get #root element:", root)
+    return
+  }
+  root.innerHTML = ''
+  for (const [id, folder] of Object.entries(folders)) {
+    const folderBlock = tpl.folder({ title: folder.title, id })
+    if (!folderBlock) {
+      console.warn("can't get folder template for:")
+      console.log(id, folder)
+      continue
+    }
+    root.prepend(folderBlock)
+
+    const bookmarksBlock = document.getElementById(consts.folder_bookmarks(id))
+    for (const bookmark of folder.bookmarks) {
+      bookmarksBlock.appendChild(tpl.bookmark(bookmark))
+    }
+  }
+}
+
+function reRenderBookmarks() {
+  browser.bookmarks.getTree((bookmarksRoot) => {
+    if (!validateBookmarks(bookmarksRoot)) return
+    renderBookmarks(filterFolders(bookmarksRoot[0].children))
+  })
+}
 
 function validateBookmarks(bookmarks) {
   const fail = () => {

@@ -1,14 +1,17 @@
 /* global consts */ // consts.js
+/* global reRenderBookmarks */ // bookmarks.js
 
 /* exported
   toggleRemoveMode
+  removeState
 */
 
 var removeState = false
 
-function toggleRemoveMode(folders, setState = undefined) {
+function toggleRemoveMode(folders) {
   if (removeState) {
-    window.location.reload()
+    removeState = false
+    reRenderBookmarks()
     return
   }
   removeState = true
