@@ -11,6 +11,14 @@ function startListeningButtons(callbacks) {
   }
 }
 
+function handleEscape() {
+  document.addEventListener('keyup', (e) => {
+    if (e.key !== 'Escape') return
+    if (removeState) reRenderBookmarks()
+    document.getElementById(consts.theme_dialog_block_id)?.remove()
+  })
+}
+
 function main() {
   browser.bookmarks.getTree((bookmarksRoot) => {
     if (!validateBookmarks(bookmarksRoot)) return
@@ -21,6 +29,7 @@ function main() {
       btn_theme: toggleThemeDialog,
       btn_remove: () => toggleRemoveMode(folders),
     })
+    handleEscape()
     storage.init()
     applyColorscheme(storage.load().colors)
   })
