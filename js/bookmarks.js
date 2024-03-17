@@ -28,10 +28,15 @@ function renderBookmarks(folders) {
   }
 }
 
-function reRenderBookmarks() {
+function reRenderBookmarks(callbacks = undefined) {
   browser.bookmarks.getTree((bookmarksRoot) => {
     if (!validateBookmarks(bookmarksRoot)) return
     renderBookmarks(filterFolders(bookmarksRoot[0].children))
+    if (callbacks) {
+      for (const callback of callbacks) {
+        callback()
+      }
+    }
   })
 }
 

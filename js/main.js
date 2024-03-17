@@ -11,12 +11,28 @@ function startListeningButtons(callbacks) {
   }
 }
 
-function handleEscape() {
-  document.addEventListener('keyup', (e) => {
-    if (e.key !== 'Escape') return
-    if (removeState) reRenderBookmarks()
-    document.getElementById(consts.theme_dialog_block_id)?.remove()
-  })
+function handleKeybindings(e) {
+  switch (e.key) {
+    case 't':
+      toggleThemeDialog()
+      break
+    case 'Escape':
+      if (removeState) {
+        document.removeEventListener('keyup', handleKeybindings)
+        reRenderBookmarks([
+          () => document.addEventListener('keyup', handleKeybindings),
+        ])
+      }
+      document.getElementById(consts.theme_dialog_block_id)?.remove()
+      break
+    case 'r':
+      if (!removeState) {
+        browser.bookmarks.getTree((bookmarksRoot) => {
+          toggleRemoveMode(filterFolders(bookmarksRoot[0].children))
+        })
+      }
+      break
+  }
 }
 
 function main() {
@@ -29,7 +45,7 @@ function main() {
       btn_theme: toggleThemeDialog,
       btn_remove: () => toggleRemoveMode(folders),
     })
-    handleEscape()
+    document.addEventListener('keyup', handleKeybindings)
     storage.init()
     applyColorscheme(storage.load().colors)
   })
