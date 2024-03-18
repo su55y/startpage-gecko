@@ -12,24 +12,24 @@ function startListeningButtons(callbacks) {
 }
 
 function handleKeybindings(e) {
+  if (e.ctrlKey) return
   switch (e.key) {
     case 't':
+      if (removeState) toggleRemoveMode()
       toggleThemeDialog()
       break
     case 'Escape':
-      if (removeState) {
-        document.removeEventListener('keyup', handleKeybindings)
-        reRenderBookmarks([
-          () => document.addEventListener('keyup', handleKeybindings),
-        ])
-      }
+      if (removeState) toggleRemoveMode()
       document.getElementById(consts.theme_dialog_block_id)?.remove()
       break
     case 'r':
       if (!removeState) {
+        document.getElementById(consts.theme_dialog_block_id)?.remove()
         browser.bookmarks.getTree((bookmarksRoot) => {
           toggleRemoveMode(filterFolders(bookmarksRoot[0].children))
         })
+      } else {
+        toggleRemoveMode()
       }
       break
   }
