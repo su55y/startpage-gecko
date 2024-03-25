@@ -49,10 +49,12 @@ function newRemoveFolderBtn(id, title) {
   btn.title = `remove ${title}`
   btn.className = 'btn-remove-folder'
   btn.addEventListener('click', () => {
-    browser.bookmarks
-      .removeTree(id)
-      .then(() => document.getElementById(id)?.remove())
-      .catch((e) => console.warn(`bookmarks.removeTree exception: ${e}`))
+    if (confirm(`remove '${title}?'`)) {
+      browser.bookmarks
+        .removeTree(id)
+        .then(() => document.getElementById(id)?.remove())
+        .catch((e) => console.warn(`bookmarks.removeTree exception: ${e}`))
+    }
   })
   btn.addEventListener('mouseover', () => {
     document.getElementById(id).classList.add('folder-remove')
