@@ -31,21 +31,19 @@ div {
 
 html {
   animation: 0.25s linear 0s 1 fadeIn;
-  background-color: #000;
+  background-color: var(--bg);
+  color: var(--fg);
 }
 
 body {
-  background-color: var(--bg);
-  color: var(--fg);
   display: flex;
-  height: 100vh;
 }
 
 #root {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
-  height: 50vh;
-  margin: auto;
+  padding: 3rem;
 }
 
 .folder {
@@ -68,7 +66,7 @@ body {
 }
 
 .bookmark:hover {
-  color: var(--fgw);
+  color: var(--red);
 }
 
 .buttons {
