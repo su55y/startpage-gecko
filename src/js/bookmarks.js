@@ -28,16 +28,15 @@ function renderBookmarks(folders) {
   }
 }
 
-function reRenderBookmarks(callbacks = undefined) {
-  browser.bookmarks.getTree((bookmarksRoot) => {
-    if (!validateBookmarks(bookmarksRoot)) return
-    renderBookmarks(filterFolders(bookmarksRoot[0].children))
-    if (callbacks) {
-      for (const callback of callbacks) {
-        callback()
-      }
+async function reRenderBookmarks(callbacks = undefined) {
+  const bookmarksRoot = await browser.bookmarks.getTree()
+  if (!validateBookmarks(bookmarksRoot)) return
+  renderBookmarks(filterFolders(bookmarksRoot[0].children))
+  if (callbacks) {
+    for (const callback of callbacks) {
+      callback()
     }
-  })
+  }
 }
 
 function validateBookmarks(bookmarks) {
@@ -69,21 +68,31 @@ function filterFolders(bookmarksArray) {
 
   function iterateOver(bookmarksRoot) {
     for (const bookmarkNode of bookmarksRoot) {
-      if (!bookmarkNode.hasOwnProperty('type')) continue
-      switch (bookmarkNode.type) {
-        case BookmarkNodeType.Folder:
+      if (!bookmarkNode.hasOwnProperty('type')) {
+        if (bookmarkNode.hasOwnProperty('children')) {
           folders[bookmarkNode.id] = {
-            title: bookmarkNode.title,
-            bookmarks: new Array(),
+              title: bookmarkNode.title,
+              bookmarks: new Array(),
           }
           iterateOver(bookmarkNode.children)
-          break
-        case BookmarkNodeType.Bookmark:
+        } else {
           folders[bookmarkNode.parentId].bookmarks.push(bookmarkNode)
-          break
-        case BookmarkNodeType.Separator:
-          // not include
-          break
+        }
+      } else {
+        switch (bookmarkNode.type) {
+          case BookmarkNodeType.Folder:
+            folders[bookmarkNode.id] = {
+              title: bookmarkNode.title,
+              bookmarks: new Array(),
+            }
+            iterateOver(bookmarkNode.children)
+            break
+          case BookmarkNodeType.Bookmark:
+            folders[bookmarkNode.parentId].bookmarks.push(bookmarkNode)
+            break
+          case BookmarkNodeType.Separator:
+            break
+        }
       }
     }
   }

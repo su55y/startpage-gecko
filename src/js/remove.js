@@ -8,10 +8,10 @@
 
 var removeState = false
 
-function toggleRemoveMode(folders) {
+async function toggleRemoveMode(folders) {
   if (removeState) {
     removeState = false
-    reRenderBookmarks()
+    await reRenderBookmarks()
     return
   }
   removeState = true
