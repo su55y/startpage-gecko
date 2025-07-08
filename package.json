@@ -1,7 +1,7 @@
 {
   "name": "startpage-gecko",
   "version": "1.0.0",
-  "description": "",
+  "description": "Browser extension that replace startpage",
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf dist && rm -f src/js/browser-polyfill.min.js",
@@ -15,8 +15,8 @@
     "url": "git+https://github.com/su55y/startpage-gecko.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "su55y",
+  "license": "GPL-3.0-or-later",
   "type": "commonjs",
   "bugs": {
     "url": "https://github.com/su55y/startpage-gecko/issues"
