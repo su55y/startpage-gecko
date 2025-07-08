@@ -1,0 +1,29 @@
+{
+  "name": "startpage-gecko",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rm -rf dist && rm -f src/js/browser-polyfill.min.js",
+    "copy-polyfill": "cp node_modules/webextension-polyfill/dist/browser-polyfill.min.js src/js/",
+    "build-firefox": "web-ext build --source-dir=src --artifacts-dir=dist/firefox",
+    "build-chrome": "rm -rf dist/chrome && cp -r src dist/chrome",
+    "build": "npm run clean && npm run copy-polyfill && npm run build-firefox && npm run build-chrome"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/su55y/startpage-gecko.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/su55y/startpage-gecko/issues"
+  },
+  "homepage": "https://github.com/su55y/startpage-gecko#readme",
+  "devDependencies": {
+    "web-ext": "^8.8.0",
+    "webextension-polyfill": "^0.12.0"
+  }
+}
