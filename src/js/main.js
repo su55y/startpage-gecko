@@ -4,8 +4,6 @@
 /* global toggleRemoveMode, removeState */ //remove.js
 /* global storage */ //storage.js
 
-// importScripts('browser-polyfill.js')
-
 function startListeningButtons(callbacks) {
   for (const btn of document.querySelectorAll('div[id^=btn_]')) {
     if (callbacks.hasOwnProperty(btn.id))
@@ -14,9 +12,10 @@ function startListeningButtons(callbacks) {
 }
 
 async function handleKeybindings(e) {
+  console.log(e)
   if (e.ctrlKey) return
   switch (e.key) {
-    case 't':
+    case 'T':
       if (removeState) await toggleRemoveMode()
       toggleThemeDialog()
       break
@@ -24,13 +23,11 @@ async function handleKeybindings(e) {
       if (removeState) await toggleRemoveMode()
       document.getElementById(consts.theme_dialog_block_id)?.remove()
       break
-    case 'r':
+    case 'R':
       if (!removeState) {
         document.getElementById(consts.theme_dialog_block_id)?.remove()
         const bookmarksRoot = await browser.bookmarks.getTree()
-        // browser.bookmarks.getTree((bookmarksRoot) => {
         await toggleRemoveMode(filterFolders(bookmarksRoot[0].children))
-        // })
       } else {
         await toggleRemoveMode()
       }
@@ -40,7 +37,6 @@ async function handleKeybindings(e) {
 
 async function main() {
   const bookmarksRoot = await browser.bookmarks.getTree()
-  // browser.bookmarks.getTree((bookmarksRoot) => {
   if (!validateBookmarks(bookmarksRoot)) return
 
   const folders = filterFolders(bookmarksRoot[0].children)
@@ -52,7 +48,6 @@ async function main() {
   document.addEventListener('keyup', handleKeybindings)
   storage.init()
   applyColorscheme(storage.load().colors)
-  // })
 }
 
 main()
