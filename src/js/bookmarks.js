@@ -68,11 +68,18 @@ function filterFolders(bookmarksArray) {
 
   function iterateOver(bookmarksRoot) {
     for (const bookmarkNode of bookmarksRoot) {
+      // Skip toolbar
+      if (
+        bookmarkNode.id === 'toolbar_____' ||
+        (bookmarkNode.hasOwnProperty('folderType') &&
+          bookmarkNode.folderType === 'bookmarks-bar')
+      )
+        continue
       if (!bookmarkNode.hasOwnProperty('type')) {
         if (bookmarkNode.hasOwnProperty('children')) {
           folders[bookmarkNode.id] = {
-              title: bookmarkNode.title,
-              bookmarks: new Array(),
+            title: bookmarkNode.title,
+            bookmarks: new Array(),
           }
           iterateOver(bookmarkNode.children)
         } else {
