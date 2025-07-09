@@ -1,13 +1,11 @@
 :root {
-  --bg: '#2e3440'; /* nord0 */
-  --bg1: '#3b4252'; /* nord1 */
-  --bg2: '#434c5e'; /* nord2 */
+  --bg: '#2e3440';
+  --bg2: '#3b4252';
 
-  --fg: '#e5e9f0'; /* nord5 */
-  --fgd: '#d8dee9'; /* nord4 */
-  --fgw: '#eceff4'; /* nord6 */
+  --fg: '#e5e9f0';
+  --fg2: '#d8dee9';
 
-  --red: '#bf616a'; /* nord11 */
+  --red: '#bf616a';
 }
 
 @keyframes fadeIn {
@@ -15,9 +13,11 @@
     opacity: 0;
     filter: blur(10px);
   }
+
   90% {
     filter: blur(0px);
   }
+
   100% {
     opacity: 1;
   }
@@ -48,7 +48,7 @@ body {
 
 .folder {
   padding: 1rem 2rem;
-  background-color: var(--bg1);
+  background-color: var(--bg2);
   overflow-y: auto;
   position: relative;
 }
@@ -56,7 +56,7 @@ body {
 .folder-title {
   font-size: 1.2rem;
   font-weight: 600;
-  color: var(--fgd);
+  color: var(--fg2);
 }
 
 .bookmark {
@@ -84,7 +84,7 @@ body {
 }
 
 .btn:hover {
-  color: var(--fgw);
+  color: var(--red);
 }
 
 .btn-remove-folder {
@@ -117,6 +117,7 @@ body {
   text-decoration: line-through;
   filter: brightness(1.1);
 }
+
 .bookmark-remove::marker {
   content: 'x';
   color: var(--red);

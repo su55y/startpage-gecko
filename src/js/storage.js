@@ -4,24 +4,20 @@
 
 const nord = {
   bg: '#2e3440', // nord0
-  bg1: '#3b4252', // nord1
-  bg2: '#434c5e', // nord2
+  bg2: '#3b4252', // nord1
 
   fg: '#e5e9f0', // nord5
-  fgd: '#d8dee9', // nord4
-  fgw: '#eceff4', // nord6
+  fg2: '#d8dee9', // nord4
 
   red: '#bf616a', // nord11
 }
 
 const gruvbox = {
   bg: '#282828',
-  bg1: '#3c3836',
-  bg2: '#928374',
+  bg2: '#3c3836',
 
   fg: '#ebdbb2',
   fg2: '#fbf1c7',
-  fg2: '#a89984',
 
   red: '#cc241d',
 }
