@@ -36,7 +36,12 @@ async function toggleRemoveMode(folders) {
       bookmarkBlock.addEventListener('click', () => {
         browser.bookmarks
           .remove(bookmark.id)
-          .then(() => bookmarkBlock.remove())
+          .then(() => {
+            let parentBlock = bookmarkBlock.parentElement
+            bookmarkBlock.remove()
+            parentBlock.setAttribute('tabindex', '-1')
+            parentBlock.focus()
+          })
           .catch((e) => console.warn(`bookmarks.remove exception: ${e}`))
       })
     }
