@@ -22,6 +22,7 @@ const gruvbox = {
   red: '#cc241d',
 }
 
+const FOLDERS_ORDER_STORAGE_KEY = 'start_page_folders_order'
 const THEME_STORAGE_KEY = 'start_page_theme'
 const DEFAULT_THEME_STORAGE = JSON.stringify({
   colors: nord,
@@ -32,17 +33,30 @@ const init = () => {
     window.localStorage.setItem(THEME_STORAGE_KEY, DEFAULT_THEME_STORAGE)
 }
 
-const load = () =>
+const loadColors = () =>
   JSON.parse(
     window.localStorage.getItem(THEME_STORAGE_KEY) || DEFAULT_THEME_STORAGE
   )
 
+const loadOrder = () => {
+  const rawOrder = window.localStorage.getItem(FOLDERS_ORDER_STORAGE_KEY)
+  if (rawOrder) return JSON.parse(rawOrder)
+}
+
 const updateColors = (colors) =>
   window.localStorage.setItem(THEME_STORAGE_KEY, JSON.stringify({ colors }))
 
+const updateOrder = (newOrder) =>
+  window.localStorage.setItem(
+    FOLDERS_ORDER_STORAGE_KEY,
+    JSON.stringify(newOrder)
+  )
+
 const storage = {
   init,
-  load,
+  loadColors,
+  loadOrder,
   update: updateColors,
+  updateOrder,
   themePresets: { nord, gruvbox },
 }

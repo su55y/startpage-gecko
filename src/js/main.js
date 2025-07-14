@@ -47,7 +47,7 @@ async function main() {
   })
   document.addEventListener('keyup', handleKeybindings)
   storage.init()
-  applyColorscheme(storage.load().colors)
+  applyColorscheme(storage.loadColors().colors)
 }
 
 main()

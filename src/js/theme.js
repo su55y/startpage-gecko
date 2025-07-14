@@ -26,7 +26,7 @@ function toggleThemeDialog() {
   if (colorscheme !== undefined && themeChanged()) {
     addButtons()
   } else {
-    colorscheme = storage.load().colors
+    colorscheme = storage.loadColors().colors
   }
 
   drawColors()
@@ -57,7 +57,7 @@ function updateTempColors({ id, value }) {
 }
 
 function themeChanged() {
-  for (const [id, value] of Object.entries(storage.load().colors)) {
+  for (const [id, value] of Object.entries(storage.loadColors().colors)) {
     if (!colorscheme[id]) return 1
     if (colorscheme[id] !== value) return 1
   }
@@ -90,7 +90,7 @@ function addButtons() {
   document
     .getElementById(consts.theme_dialog_button_cancel)
     ?.addEventListener('click', () => {
-      colorscheme = storage.load().colors
+      colorscheme = storage.loadColors().colors
       applyColorscheme(colorscheme)
       document.getElementById(consts.theme_dialog_block_id).remove()
       toggleThemeDialog()
